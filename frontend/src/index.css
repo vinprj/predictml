@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-void: #0a0014;
+  --color-deep: #1a0033;
+  --color-nebula: #2d1b4e;
+  --color-cosmic: #4a2c6b;
+  --color-plasma: #ff00ff;
+  --color-ion: #00d4ff;
+  --color-photon: #7b2cbf;
+  --color-aurora: #c77dff;
+  --color-stellar: #e0aaff;
+}
+
+body {
+  font-family: 'Exo 2', sans-serif;
+  background: linear-gradient(135deg, var(--color-void) 0%, var(--color-deep) 50%, #0d0221 100%);
+  color: #ffffff;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated starfield background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(1px 1px at 80% 10%, white, transparent),
+    radial-gradient(2px 2px at 90% 60%, white, transparent),
+    radial-gradient(1px 1px at 33% 80%, white, transparent);
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  opacity: 0.6;
+  animation: twinkle 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+/* Holographic gradient */
+.holo-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-plasma) 0%,
+    var(--color-photon) 25%,
+    var(--color-ion) 50%,
+    var(--color-aurora) 75%,
+    var(--color-stellar) 100%
+  );
+  background-size: 200% 200%;
+  animation: holo-shift 6s ease infinite;
+}
+
+@keyframes holo-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Glass morphism card */
+.glass-card {
+  background: rgba(26, 0, 51, 0.4);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(199, 125, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(123, 44, 191, 0.37);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(199, 125, 255, 0.6);
+  box-shadow: 0 12px 48px 0 rgba(123, 44, 191, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Neon glow */
+.neon-glow {
+  text-shadow: 
+    0 0 7px var(--color-aurora),
+    0 0 10px var(--color-aurora),
+    0 0 21px var(--color-aurora),
+    0 0 42px var(--color-plasma),
+    0 0 82px var(--color-plasma);
+}
+
+.neon-glow-blue {
+  text-shadow: 
+    0 0 7px var(--color-ion),
+    0 0 10px var(--color-ion),
+    0 0 21px var(--color-ion);
+}
+
+/* Pulsing orb */
+@keyframes pulse-orb {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.pulse-orb {
+  animation: pulse-orb 3s ease-in-out infinite;
+}
+
+/* Slide up animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Orbitron font for headers */
+.font-orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-aurora), var(--color-ion));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Energy beam */
+.energy-beam {
+  position: relative;
+  overflow: hidden;
+}
+
+.energy-beam::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 212, 255, 0.4),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.energy-beam:hover::before {
+  left: 100%;
+}
+
+/* Holographic border */
+.holo-border {
+  position: relative;
+  border: 2px solid transparent;
+  background: linear-gradient(var(--color-void), var(--color-void)) padding-box,
+              linear-gradient(135deg, var(--color-plasma), var(--color-ion), var(--color-aurora)) border-box;
+}
+
+/* Loading spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  border: 3px solid rgba(199, 125, 255, 0.3);
+  border-top-color: var(--color-ion);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+/* Chart animations */
+.chart-enter {
+  animation: slideUp 0.8s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .neon-glow {
+    text-shadow: 
+      0 0 5px var(--color-aurora),
+      0 0 8px var(--color-plasma);
+  }
+}

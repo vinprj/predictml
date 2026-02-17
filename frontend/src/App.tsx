@@ -1,0 +1,107 @@
+import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
+import PredictPage from './pages/PredictPage'
+import HistoryPage from './pages/HistoryPage'
+import ModelsPage from './pages/ModelsPage'
+import type { HistoryStats } from './types'
+
+function Navigation() {
+  const location = useLocation()
+  
+  const isActive = (path: string) => {
+    return location.pathname === path
+      ? 'bg-gradient-to-r from-purple-600 to-blue-500 text-white'
+      : 'text-gray-300 hover:text-white hover:bg-white/10'
+  }
+
+  return (
+    <nav className="glass-card rounded-full px-6 py-3 flex gap-2">
+      <Link
+        to="/"
+        className={`px-6 py-2 rounded-full font-semibold transition-all ${isActive('/')}`}
+      >
+        🔮 Predict
+      </Link>
+      <Link
+        to="/history"
+        className={`px-6 py-2 rounded-full font-semibold transition-all ${isActive('/history')}`}
+      >
+        📊 History
+      </Link>
+      <Link
+        to="/models"
+        className={`px-6 py-2 rounded-full font-semibold transition-all ${isActive('/models')}`}
+      >
+        🤖 Models
+      </Link>
+    </nav>
+  )
+}
+
+function Layout({ children }: { children: React.ReactNode }) {
+  const [stats, setStats] = useState<HistoryStats | null>(null)
+
+  useEffect(() => {
+    fetch('/history/stats')
+      .then(res => res.json())
+      .then(setStats)
+      .catch(console.error)
+  }, [])
+
+  return (
+    <div className="min-h-screen relative z-10">
+      {/* Header */}
+      <header className="border-b border-purple-500/20 backdrop-blur-sm sticky top-0 z-50 bg-gradient-to-b from-black/50 to-transparent">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <h1 className="text-5xl font-bold font-orbitron gradient-text neon-glow mb-2">
+                PREDICT ML
+              </h1>
+              <p className="text-gray-400 text-sm font-light">
+                AI-Powered Prediction Service • v2.0
+              </p>
+            </div>
+            {stats && (
+              <div className="glass-card rounded-2xl px-6 py-3">
+                <div className="text-sm text-gray-400 mb-1">Total Predictions</div>
+                <div className="text-3xl font-bold font-orbitron gradient-text">
+                  {stats.total_predictions.toLocaleString()}
+                </div>
+              </div>
+            )}
+          </div>
+          <Navigation />
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-6 py-12">
+        {children}
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-purple-500/20 mt-20 py-8">
+        <div className="max-w-7xl mx-auto px-6 text-center text-gray-500 text-sm">
+          <p>PredictML • Powered by Machine Learning • MIT License</p>
+        </div>
+      </footer>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<PredictPage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/models" element={<ModelsPage />} />
+        </Routes>
+      </Layout>
+    </Router>
+  )
+}
+
+export default App
