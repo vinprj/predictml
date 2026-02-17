@@ -4,3 +4,5 @@ pandas
 numpy
 uvicorn
 joblib
+sqlalchemy
+httpx
