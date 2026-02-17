@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
 import PredictPage from './pages/PredictPage'
 import HistoryPage from './pages/HistoryPage'
 import ModelsPage from './pages/ModelsPage'
 import type { HistoryStats } from './types'
 
-const FAVORITES_KEY = 'predictml_favorites'
+// const FAVORITES_KEY = 'predictml_favorites'  // Reserved for future favorites feature
 
 function Navigation() {
   const location = useLocation()
@@ -91,30 +91,6 @@ function ApiStatus() {
 
 function Layout({ children }: { children: React.ReactNode }) {
   const [stats, setStats] = useState<HistoryStats | null>(null)
-  const [favorites, setFavorites] = useState<string[]>([])
-
-  // Load favorites from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem(FAVORITES_KEY)
-    if (saved) {
-      try {
-        setFavorites(JSON.parse(saved))
-      } catch (e) {
-        console.error('Failed to load favorites:', e)
-      }
-    }
-  }, [])
-
-  // Save favorites to localStorage
-  const toggleFavorite = useCallback((modelName: string) => {
-    setFavorites(prev => {
-      const updated = prev.includes(modelName)
-        ? prev.filter(f => f !== modelName)
-        : [...prev, modelName]
-      localStorage.setItem(FAVORITES_KEY, JSON.stringify(updated))
-      return updated
-    })
-  }, [])
 
   useEffect(() => {
     fetch('/history/stats')

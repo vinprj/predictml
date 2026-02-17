@@ -240,7 +240,7 @@ function PredictPage() {
                     <div className="text-5xl font-bold font-orbitron gradient-text mb-4 animate-pulse">
                       {Object.entries(result)
                         .filter(([key]) => key.includes('predicted'))
-                        .map(([_, value]) => typeof value === 'number' ? value.toLocaleString() : value)}
+                        .map(([key, value]) => <span key={key}>{typeof value === 'number' ? value.toLocaleString() : String(value)}</span>)}
                     </div>
                     <div className="flex justify-center gap-4 text-sm text-gray-400 flex-wrap">
                       <div className="flex items-center gap-1">
